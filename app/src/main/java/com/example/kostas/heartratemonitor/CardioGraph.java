@@ -100,7 +100,7 @@ public class CardioGraph extends AppCompatActivity implements Bluetooth.Communic
                     mSeries.resetData(generateData());
                     int bpm=Bpm();
                     calcDanger(bpm);
-                    ecgInterpereter.processECGSignal(values);
+                    Toast.makeText(CardioGraph.this, ecgInterpereter.processECGSignal(values), Toast.LENGTH_LONG).show();
                 }else{
                     Toast.makeText(CardioGraph.this, "You Haven't Taken a Heart Rate Test", Toast.LENGTH_SHORT).show();
                 }

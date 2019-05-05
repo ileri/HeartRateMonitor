@@ -94,11 +94,22 @@ public class ECGInterpereter {
     public String processECGSignal(String signal){
         int[] endTimes = splitECGSignal(signal);
         int startTime = 0;
+
+        double prIntervalSum = 0;
+        double qtIntervalSum = 0;
+
         for(int i = 0; i < endTimes.length; i++){
             System.arraycopy(valuesArray, startTime, waveArray, 0, endTimes[i]-startTime);
-            getPQRST();
+            int[] pqrst = getPQRST();
+            double prInterval = (pqrst[1] - pqrst[0])*(0.006);
+            double qtInterval = (pqrst[4] - pqrst[1])*(0.006);
+
+            prIntervalSum += prInterval;
+            qtIntervalSum += qtInterval;
         }
-        return "TODO : Add Information to this String";
+
+
+        return "PR interval avg: " + (prIntervalSum/endTimes.length) + " QT intervar avg: " + (qtIntervalSum/endTimes.length);
     }
 
     private int[] getPQRST(){
