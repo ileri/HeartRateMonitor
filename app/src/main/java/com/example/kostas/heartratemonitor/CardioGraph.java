@@ -45,10 +45,14 @@ public class CardioGraph extends AppCompatActivity implements Bluetooth.Communic
     //          2 --> Have received , ready to show/save
     int flagValue=1;
 
+    private ECGInterpereter ecgInterpereter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cardio_graph);
+
+        ecgInterpereter = new ECGInterpereter();
 
         bpmText=(TextView)findViewById(bpm);
         history = (Button)findViewById(R.id.history);
@@ -96,6 +100,7 @@ public class CardioGraph extends AppCompatActivity implements Bluetooth.Communic
                     mSeries.resetData(generateData());
                     int bpm=Bpm();
                     calcDanger(bpm);
+                    ecgInterpereter.processECGSignal(values);
                 }else{
                     Toast.makeText(CardioGraph.this, "You Haven't Taken a Heart Rate Test", Toast.LENGTH_SHORT).show();
                 }
